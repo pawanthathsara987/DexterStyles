@@ -1,176 +1,233 @@
 * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: #f0f2f5;
+    margin-top: 60px;
+}
+
+.header {
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo img {
+    max-width: 150px;
+    height: auto;
+    /* If using text instead of image, uncomment below and remove img styles:
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase; */
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu li a:hover {
+    color: #007bff;
+}
+
+/* Removed nav-actions and logo-container styles since they’re no longer needed */
+
+/* Existing wrapper and container styles remain the same */
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(20px);
+}
+
+.welcome-container {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    right: 0;
+    background: #1877f2;
+    color: white;
+    transition: all 0.6s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+}
+
+.sign-up-container {
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.sign-in-container {
+    left: 0;
+    opacity: 1;
+    z-index: 2;
+}
+
+.container.active .sign-up-container {
+    transform: translateX(100%) translateY(0);
+    opacity: 1;
+    z-index: 2;
+}
+
+.container.active .sign-in-container {
+    transform: translateX(100%) translateY(20px);
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.active .welcome-container {
+    transform: translateX(-100%);
+}
+
+form {
+    width: 80%;
+    max-width: 340px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.welcome-container h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.welcome-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.welcome-text {
+    transition: all 0.6s ease-in-out;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.welcome-signup {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(20px);
+}
+
+.welcome-signin {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+}
+
+.container.active .welcome-signup {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+}
+
+.container.active .welcome-signin {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-20px);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.toggle-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.toggle-link a {
+    color: #1877f2;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.welcome-container .toggle-link a {
+    color: white;
+}
+
+.toggle-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
     }
 
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: #f0f2f5;
-    }
-
-    .container {
-        position: relative;
-        width: 800px;
-        height: 500px;
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-container {
-        position: absolute;
-        width: 50%;
-        height: 100%;
-        transition: all 0.6s ease-in-out;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transform: translateY(20px); /* Slight bottom offset for animation */
-    }
-
-    .welcome-container {
-        position: absolute;
-        width: 50%;
-        height: 100%;
-        right: 0;
-        background: #1877f2;
-        color: white;
-        transition: all 0.6s ease-in-out;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .nav-menu {
+        flex-direction: column;
         text-align: center;
-        padding: 40px;
     }
 
-    .sign-up-container {
-        left: 0;
-        opacity: 0;
-        z-index: 1;
+    .logo img {
+        max-width: 120px; /* Smaller logo on mobile */
     }
-
-    .sign-in-container {
-        left: 0;
-        opacity: 1;
-        z-index: 2;
-    }
-
-    .container.active .sign-up-container {
-        transform: translateX(100%) translateY(0); /* Move right and up */
-        opacity: 1;
-        z-index: 2;
-    }
-
-    .container.active .sign-in-container {
-        transform: translateX(100%) translateY(20px); /* Move right and down */
-        opacity: 0;
-        z-index: 1;
-    }
-
-    .container.active .welcome-container {
-        transform: translateX(-100%);
-    }
-
-    form {
-        width: 80%;
-        max-width: 340px;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #333;
-    }
-
-    .welcome-container h1 {
-        color: white;
-        margin-bottom: 20px;
-    }
-
-    .welcome-container p {
-        font-size: 16px;
-        line-height: 1.5;
-        margin-bottom: 20px;
-    }
-
-    .welcome-text {
-        transition: all 0.6s ease-in-out; /* Match form transition timing */
-        position: absolute;
-        width: 100%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .welcome-signup {
-        opacity: 0;
-        transform: translate(-50%, -50%) translateY(20px); /* Start below */
-    }
-
-    .welcome-signin {
-        opacity: 1;
-        transform: translate(-50%, -50%) translateY(0); /* Start at center */
-    }
-
-    .container.active .welcome-signup {
-        opacity: 1;
-        transform: translate(-50%, -50%) translateY(0); /* Move to center */
-    }
-
-    .container.active .welcome-signin {
-        opacity: 0;
-        transform: translate(-50%, -50%) translateY(-20px); /* Move up */
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    button {
-        width: 100%;
-        padding: 12px;
-        background: #1877f2;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    button:hover {
-        background: #166fe5;
-    }
-
-    .toggle-link {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .toggle-link a {
-        color: #1877f2;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    .welcome-container .toggle-link a {
-        color: white;
-    }
-
-    .toggle-link a:hover {
-        text-decoration: underline;
-    }
+}
