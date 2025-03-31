@@ -58,7 +58,7 @@ $conn->close();
             <div class="col-md-6">
                 <!-- Main Product Image -->
                 <div class="product-detail">
-                    <img src="1.jpg" class="product-image" id="mainImage">
+                    <img src="G:\PROJECTS\DexterStyles\Images\1.jpg" class="product-image" id="mainImage">
                     <!-- <?php echo $product['image']; ?>' -->
                 </div>
                 <!-- Additional Images (Slider) -->
