@@ -1,0 +1,342 @@
+/* General Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* Profile Page Container */
+.profile-container {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Profile Image */
+.profile-container img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%; /* Circular profile image */
+    border: 5px solid #007bff;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+}
+
+.profile-container img:hover {
+    transform: scale(1.1); /* Enlarges the image on hover */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+
+/* Profile Info */
+.profile-info {
+    margin-top: 20px;
+}
+.profile-info h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: 600;
+}
+.profile-info p {
+    font-size: 16px;
+    font-weight: 400;
+    color:  #555555;
+    margin-bottom: 10px;
+}
+.settings-section {
+    background: #f9f9f9; /* Slightly lighter background for distinction */
+    border-left: 4px solid #007bff; /* Left border to highlight the section */
+    padding: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.settings-section:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);/* Slight shadow on hover */
+    background-color: #d0e7f9; 
+}
+
+
+/* Sidebar Styles */
+.profile-sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* For smaller screens, stack the sidebar and content area */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        box-shadow: none;
+    }
+
+    .content-area {
+        /* margin-left: 0; */
+        margin-left: auto; 
+        margin-right: auto;
+    }
+}
+
+/* Menu Items */
+.menu-item {
+    margin: 15px 0;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: #d0e7f9;
+}
+
+.menu-item.text-danger:hover {
+    background-color: #f8d7da;
+}
+
+.icon-img {
+    width: 2px;  /*Adjust size as needed */
+    height: 5px;
+    margin-right: 5px; 
+    
+}
+
+.profile-sidebar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Circular profile image */
+    border: 3px solid #007bff;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile-sidebar img:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.content-area {
+    margin-left: 270px; /* Leaves space for the sidebar */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+/* logout popup */
+#logoutPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Logout buttons */
+#confirmLogout {
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#cancelLogout {
+    background: gray;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Hide the profile info on logout */
+.hidden {
+    visibility: hidden;
+}
+
+/* Basic styling for the modal */
+.settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    flex-direction: column;
+    color: white;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.settings-option {
+    margin-bottom: 20px;
+   
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.dark-theme {
+    background-color: #121212;
+    color: white;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: black;
+}
+
+/* edit profile css  */
+body {
+    background-image: url('editprofilebackgrount.jpg');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    height: 100vh;
+    margin: 0;
+}
+
+.editprofile-container {
+    
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    text-align: center;
+    margin: auto;  /* Ensure it's centered */
+ /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+} */
+
+.form-group {
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%; /* Ensure it takes the full width */
+    background-color: #ffffff; /* Set white background to match other elements */
+    padding: 10.5px; /* Add some padding to give it a consistent feel */
+    border-radius: 5px; /* Rounded corners to match the design */
+    /* border: 1px solid #ccc; Light border to match the style */
+}
+
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+.card img {
+    width: 550px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.card-details .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-details .left, .card-details .right {
+    flex: 1;
+    margin: 30px;
+}
