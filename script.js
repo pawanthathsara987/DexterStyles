@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Handle Confirm Logout button
         document.getElementById("confirmLogout").addEventListener("click", function () {
-            profileImg.src = "blankprofile.jpg";  // Remove profile picture
+            profileImg.src = "C:\xampp\htdocs\dexter\images\blankprofile.jpg";  // Remove profile picture
             userName.classList.add("hidden"); // Hide username
             userEmail.classList.add("hidden"); // Hide email
             document.body.removeChild(popup); // Remove popup

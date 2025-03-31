@@ -58,7 +58,7 @@ $conn->close();
             <div class="col-md-6">
                 <!-- Main Product Image -->
                 <div class="product-detail">
-                    <img src="G:\PROJECTS\DexterStyles\Images\1.jpg" class="product-image" id="mainImage">
+                    <img src="C:\xampp\htdocs\dexter\images\1.jpg" class="product-image" id="mainImage">
                     <!-- <?php echo $product['image']; ?>' -->
                 </div>
                 <!-- Additional Images (Slider) -->
@@ -67,7 +67,7 @@ $conn->close();
                     // Handle additional images (comma-separated list)
                     $additional_images = explode(',', $product['additional_images']);
                     foreach ($additional_images as $image) {
-                        echo "<img src='2.jpg' class='product-thumbnail' onclick='changeImage(\"images/$image\")'>";
+                        echo "<img src='C:\xampp\htdocs\dexter\images\2.jpg' class='product-thumbnail' onclick='changeImage(\"images/$image\")'>";
                     }
                     ?>
                 </div>

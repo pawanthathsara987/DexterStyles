@@ -13,7 +13,7 @@ $admin_id = $_SESSION['Ad_id'];
 
 // Debugging: Check if session is set
 // echo "Admin ID from Session: " . $admin_id;
-//  <img src="editprofilebackgrount" >
+//  <img src="C:\xampp\htdocs\dexter\images\editprofilebackgrount.jpg" >
 
 
 // Fetch admin details from the database
@@ -24,7 +24,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $admin = $result->fetch_assoc();
 
-$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'editprofilebackgrount.jpg';
+$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'C:\xampp\htdocs\dexter\images\editprofilebackgrount.jpg';
 
 $message = ''; // Variable to store the success or error message
 
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="d-flex">
         <div class="profile-sidebar">
             <div class="text-center">
-                <img src="user.jpg" alt="Profile Picture">
+                <img src="C:\xampp\htdocs\dexter\images\user.jpg" alt="Profile Picture">
                 <!-- <h5 name="admin_name" id="ad">John Doe</h5>
                 <p name="admin_email" id="ae">john.doe@example.com</p> -->
                 <h5 id="ad"><?php echo $admin['Admin_name']; ?></h5>
@@ -152,14 +152,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!-- 
     <div class="card" id="creditcard" onclick="displayCardDetails()">
-        <img src="credit_cards.jpg" alt="Card Image" class="card-image">
+        <img src="C:\xampp\htdocs\dexter\images\credit_cards.jpg" alt="Card Image" class="card-image">
       
     </div>
 
      Card Details (to be shown on click) 
     <div id="card-details" class="card-details" >
          <div class="left">
-            <img src="credit_cards.jpg" alt="Card Image" class="card-image">  
+            <img src="C:\xampp\htdocs\dexter\images\credit_cards.jpg" alt="Card Image" class="card-image">  
         </div> 
         <div class="right">
             <p><h3 id="cardholder-name">Cardholder Name:</h3>W.J.doe</p>
