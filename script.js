@@ -43,7 +43,7 @@ function showSettings() {
             </div>
             <div class="settings-option" onclick="clearCache()">Clear Cache</div>
             <div class="settings-option" onclick="viewPrivacyPolicy()">Privacy Policy</div>
-            <div class="settings-option" onclick="toggleNotifications()">Notification Settings</div>
+            <div class="settings-option" onclick="Changepassword()">Change password</div>
             <div class="settings-option" onclick="toggleNetworkAcceleration()">Network Acceleration</div>
            <button onclick="closeSettings()">Close</button>
         </div>
@@ -89,9 +89,9 @@ function viewPrivacyPolicy() {
     alert('Viewing Privacy Policy...');
 }
 
-function toggleNotifications() {
+function Changepassword() {
     // Simulate toggling notification settings
-    alert('Toggled Notification Settings');
+    alert('Change password...');
 }
 
 function toggleNetworkAcceleration() {
