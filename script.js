@@ -17,13 +17,39 @@ function cancelEdit(){
     
 }
 
-// Function to show card details
-function displayCardDetails() {
+
+// Add this to your script.js file, at the beginning or inside a document ready function
+document.addEventListener("DOMContentLoaded", function() {
+    // Initially hide card elements
+    document.getElementById('creditcard').style.display = 'none';
+    document.getElementById('card-details').style.display = 'none';
+});
+
+// Variable to track if card details are visible
+let cardDetailsVisible = false;
+
+function showCardDetails() {
+    // Get the card image and details elements
+    const cardImage = document.getElementById('creditcard');
     const cardDetails = document.getElementById('card-details');
-    cardDetails.style.display = 'flex';
+
+    document.getElementById('editProfileForm').style.display = 'none'; // Hide edit profile form
+    
+    // Toggle the visibility based on current state
+    if (cardDetailsVisible) {
+        // If currently visible, hide them
+        cardImage.style.display = 'none';
+        cardDetails.style.display = 'none';
+        cardDetailsVisible = false;
+    } 
+    else {
+        // If currently hidden, show them and hide other content
+        document.getElementById('editProfileForm').style.display = 'none';
+        cardImage.style.display = 'block';
+        cardDetails.style.display = 'flex';
+        cardDetailsVisible = true;
+    }
 }
-
-
 
 // Function to show settings (brightness, battery saver, etc.)
 function showSettings() {
@@ -91,7 +117,7 @@ function viewPrivacyPolicy() {
 
 function Changepassword() {
     // Simulate toggling notification settings
-    alert('Change password...');
+    alert('Change password');
 }
 
 function toggleNetworkAcceleration() {
@@ -125,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Handle Confirm Logout button
         document.getElementById("confirmLogout").addEventListener("click", function () {
-            profileImg.src = "C:\xampp\htdocs\dexter\images\blankprofile.jpg";  // Remove profile picture
+            profileImg.src = "images/blankprofile.jpg";  // Remove profile picture
             userName.classList.add("hidden"); // Hide username
             userEmail.classList.add("hidden"); // Hide email
             document.body.removeChild(popup); // Remove popup
