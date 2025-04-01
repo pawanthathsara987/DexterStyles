@@ -13,7 +13,7 @@ $admin_id = $_SESSION['Ad_id'];
 
 // Debugging: Check if session is set
 // echo "Admin ID from Session: " . $admin_id;
-//  <img src="C:\xampp\htdocs\dexter\images\editprofilebackgrount.jpg" >
+//  <img src="editprofilebackgrount" >
 
 
 // Fetch admin details from the database
@@ -24,7 +24,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $admin = $result->fetch_assoc();
 
-$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'C:\xampp\htdocs\dexter\images\editprofilebackgrount.jpg';
+$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'editprofilebackgrount.jpg';
 
 $message = ''; // Variable to store the success or error message
 
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="d-flex">
         <div class="profile-sidebar">
             <div class="text-center">
-                <img src="C:\xampp\htdocs\dexter\images\user.jpg" alt="Profile Picture">
+                <img src="images/user.jpg" alt="Profile Picture">
                 <!-- <h5 name="admin_name" id="ad">John Doe</h5>
                 <p name="admin_email" id="ae">john.doe@example.com</p> -->
                 <h5 id="ad"><?php echo $admin['Admin_name']; ?></h5>
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
 
     <div class="editprofile-container" id = "editProfileForm" >
-        <h2>Edit Profile</h2>
+        <h2>Edit Profile</h2> 
 
          <!-- Display the message here if available -->
         <?php echo $message; ?>
@@ -149,24 +149,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </form>
     </div>
+    
 
-<!-- 
-    <div class="card" id="creditcard" onclick="displayCardDetails()">
-        <img src="C:\xampp\htdocs\dexter\images\credit_cards.jpg" alt="Card Image" class="card-image">
+
+    <!-- <div class="card" id="creditcard" onclick="displayCardDetails()">
+        <img src="images/credit_cards.jpg" alt="Card Image" class="card-image">
       
-    </div>
+    </div> -->
 
-     Card Details (to be shown on click) 
+    <div class="card" id="creditcard">
+    <img src="images/credit_cards.jpg" alt="Card Image" class="card-image">
+     </div>
+
+     <!-- Card Details (to be shown on click)  -->
     <div id="card-details" class="card-details" >
          <div class="left">
-            <img src="C:\xampp\htdocs\dexter\images\credit_cards.jpg" alt="Card Image" class="card-image">  
+            <!-- <img src="credit_cards.jpg" alt="Card Image" class="card-image">   -->
         </div> 
         <div class="right">
-            <p><h3 id="cardholder-name">Cardholder Name:</h3>W.J.doe</p>
+            <p><h3 id="cardholder-name">Cardholder Name:</h3>W.J.smith</p>
             <p><h5>Card Type:</h5> <lable id="card-type">Visa</lable></p>
             <p><h5>Account Number:</h5> <span id="account-number">**** **** **** *234</span></p>
         </div>
-    </div> -->
+    </div>
 
     <!-- Include Footer -->
        <div id="footer"></div>
