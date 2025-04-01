@@ -24,7 +24,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $admin = $result->fetch_assoc();
 
-$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'editprofilebackgrount.jpg';
+$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'images/editprofilebackgrount.jpg';
 
 $message = ''; // Variable to store the success or error message
 
