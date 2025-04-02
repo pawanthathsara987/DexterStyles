@@ -174,7 +174,7 @@ body {
     border-color: #001c55;
     padding: 8px 20px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 600; 
 }
 
 #addToCartBtn:hover {
@@ -187,10 +187,10 @@ body {
 }
 
 #buyNowBtn {
-    padding: 10px 20px;
+     padding: 10px 20px;
     border-width: 2px;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.9rem; 
 }
 
 /* Shipping info */
@@ -275,3 +275,4 @@ body {
         margin-top: 10px;
     }
 }
+
