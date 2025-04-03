@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password - DexterStyles</title>
     <link rel="stylesheet" href="./../css/signin.css">
-    <link rel="stylesheet" href="./../css/forgetpassword.css">
+    <link rel="stylesheet" href="./../css/forgot-password.css">
 </head>
 <body>
     <header class="header">
@@ -57,7 +57,7 @@
                     <h1>Password Reset</h1>
                     <p>We'll help you recover your account access.</p>
                     <div class="illustration">
-                        <img src="./../img/reset-password.png" alt="Password Reset Illustration">
+                        <img src="./../img/password-reset.png" alt="Password Reset Illustration">
                     </div>
                 </div>
             </div>
@@ -65,7 +65,6 @@
     </div>
 
     <script>
-        // Password reset form handling
         document.addEventListener('DOMContentLoaded', function() {
             const forgetPasswordForm = document.getElementById('forgetPasswordForm');
             const successMessage = document.getElementById('success-message');
@@ -86,14 +85,38 @@
                 // Get the email
                 const email = this.email.value;
                 
-                // Simulate API call for password reset (replace with actual API call)
-                setTimeout(function() {
+                // Create form data
+                const formData = new FormData();
+                formData.append('email', email);
+                
+                // Send AJAX request to check email and send reset link
+                fetch('reset-password-handler.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text(); // Get the raw response text first
+                })
+                .then(text => {
+                    try {
+                        // Try to parse as JSON
+                        return JSON.parse(text);
+                    } catch (e) {
+                        // If it's not valid JSON, show the raw response
+                        console.error("Response is not valid JSON:", text);
+                        throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
+                    }
+                })
+                .then(data => {
                     // Hide loading overlay
                     loadingOverlay.classList.remove('active');
                     
-                    // For demo, we'll assume success if email contains "user" or "admin"
-                    if (email.includes('user') || email.includes('admin')) {
+                    if (data.status === 'success') {
                         successMessage.style.display = 'block';
+                        successMessage.textContent = data.message;
                         errorMessage.style.display = 'none';
                         resetBtn.disabled = true;
                         resetBtn.textContent = "Link Sent";
@@ -104,9 +127,18 @@
                         }, 3000);
                     } else {
                         errorMessage.style.display = 'block';
+                        errorMessage.textContent = data.message;
                         successMessage.style.display = 'none';
                     }
-                }, 2000); // 2 second simulated processing time
+                })
+                .catch(error => {
+                    // Hide loading overlay
+                    loadingOverlay.classList.remove('active');
+                    console.error('Error:', error);
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'System error: ' + error.message;
+                    successMessage.style.display = 'none';
+                });
             });
         });
     </script>
