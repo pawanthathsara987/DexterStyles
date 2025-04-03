@@ -1,134 +1,84 @@
+<?php
+
+    include './../php_files/conn.php';
+
+    $error_msg = "";
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+        if (isset($_POST['signinbtn'])) {
+            
+        }
+        elseif (isset($_POST['signupbtn'])) {
+            $cusname = $_POST['uname'];
+            $cusemail = $_POST['uemail'];
+            $cuspword = $_POST['upassword'];
+            $cuscpword = $_POST['uconfirm_password'];
+
+            $_SESSION['name'] = $cusname;
+
+            if ($cusemail != null) {
+                $qry_email_exist = "SELECT email FROM WHERE email = '$cusemail' ";
+                $run_email_exist = $conn->query($qry_email_exist);
+                if ($run_email_exist->num_rows > 0) {
+                    $error_msg = "Email already exist!";
+                    $_SESSION['error_msg'] = $error_msg;
+                    return;
+                }
+            }
+            
+            $qry_create_user = "INSERT INTO user(name, email, password) VALUES ('$cusname', '$cusemail', '$cuspword') ";
+            if ($conn->query($qry_create_user)) {
+                $suc_msg = "Signup Succesful!";
+                
+            }
+
+        }
+    }
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up & Sign In - DexterStyles</title>
-    <link rel="stylesheet" href="./../css/home.css">
     <link rel="stylesheet" href="./../css/signin.css">
-    <style>
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #1877f2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #166fe5;
-        }
-
-        .separator {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .separator::before,
-        .separator::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background: #ddd;
-        }
-
-        .separator::before {
-            left: 0;
-        }
-
-        .separator::after {
-            right: 0;
-        }
-
-        .separator span {
-            background: #fff;
-            padding: 0 10px;
-            color: #666;
-        }
-
-        .google-login-btn {
-            width: 100%;
-            padding: 12px 20px;
-            background:rgb(198, 205, 216);
-            color: black;
-            border: 1px solid black;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .google-login-btn:hover {
-            background:rgb(237, 239, 241);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .google-login-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .google-icon {
-            width: 24px;
-            height: 24px;
-        }
-    </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <div class="logo"><img src="path-to-dexterstyles-logo.png" alt="DexterStyles Logo"></div>
-            <ul class="nav-menu">
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/#shop">Shop</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#contact">Contact</a></li>
-            </ul>
+            <div class="logo"><a href="./../home.php"><img src="./../img/site-logo.png" alt="DexterStyles Logo" width="80px"></a></div> 
         </nav>
     </header>
 
     <div class="wrapper">
         <div class="container" id="container">
-            <div class="form-container sign-up-container">
-                <form>
-                    <h1>Create Account</h1>
-                    <div class="form-group">
-                        <input type="text" placeholder="Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" required>
-                    </div>
-                    <button type="submit">Sign Up</button>
-                </form>
+            <!-- Loading Overlay -->
+            <div class="loading-overlay" id="loading-overlay">
+                <div class="spinner"></div>
             </div>
-
+            
+            <!-- Sign In Form Container -->
             <div class="form-container sign-in-container">
-                <form>
+                <form id="signinForm" method="POST">
                     <h1>Sign In</h1>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" required>
+                        <input type="email" name="iemail" placeholder="Email" required>
                     </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" required>
+                    <div class="form-group password-wrapper">
+                        <input type="password" name="ipassword" id="signin-password" placeholder="Password" required>
+                        <img src="./../img/hidden.png" alt="Show Password" class="toggle-password" id="toggle-signin-password">
                     </div>
-                    <button type="submit">Sign In</button>
+                    <div class="remember-forgot">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember" id="remember"> Remember Me
+                        </label>
+                        <a href="./forgetpassword.php" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <button type="submit" name="signinbtn">Sign In</button>
                     <div class="separator">
                         <span>OR</span>
                     </div>
@@ -138,22 +88,52 @@
                     </button>
                 </form>
             </div>
-
-            <div class="welcome-container">
-                <div>
-                    <div class="welcome-text welcome-signup">
-                        <h1>Welcome!</h1>
-                        <p>Join our community to get started.</p>
-                        <div class="toggle-link">
-                            <a onclick="toggleForm()">Already have an account? Sign In</a>
-                        </div>
+            
+            <!-- Sign Up Form Container -->
+            <div class="form-container sign-up-container">
+                <form id="signupForm" action="" method="POST" onsubmit="return validatePasswords()">
+                    <h1>Create Account</h1>
+                    <div class="form-group">
+                        <input type="text" name="uname" placeholder="Name" required>
                     </div>
-                    <div class="welcome-text welcome-signin">
-                        <h1>Welcome Back!</h1>
-                        <p>Sign in to access your account.</p>
-                        <div class="toggle-link">
-                            <a onclick="toggleForm()">Don't have an account? Sign Up</a>
-                        </div>
+                    <div class="form-group">
+                        <input type="email" name="uemail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group password-wrapper">
+                        <input type="password" name="upassword" id="password" placeholder="Password" required>
+                        <img src="./../img/hidden.png" alt="Show Password" class="toggle-password" id="toggle-signup-password">
+                    </div>
+                    <div id="password-error" class="error-message">Password must be between 8-16 characters, include numbers, uppercase and lowercase letters, and symbols (excluding @).</div>
+                    <div class="form-group password-wrapper">
+                        <input type="password" name="uconfirm_password" id="confirm_password" placeholder="Confirm Password" required>
+                        <img src="./../img/hidden.png" alt="Show Password" class="toggle-password" id="toggle-confirm-password">
+                    </div>
+                    <div id="error-message" class="error-message">Passwords do not match!</div>
+                    <button type="submit" name="signupbtn">Sign Up</button>
+                    <div class="separator">
+                        <span>OR</span>
+                    </div>
+                    <button type="button" class="google-login-btn">
+                        <img src="./../img/google.png" alt="Google Icon" class="google-icon">
+                        Sign up with Google
+                    </button>
+                </form>
+            </div>
+
+            <!-- Welcome Section with Toggle Links -->
+            <div class="welcome-container">
+                <div class="welcome-text welcome-signin">
+                    <h1>Welcome!</h1>
+                    <p>Sign in to access your account.</p>
+                    <div class="toggle-link">
+                        <a onclick="toggleFormWithLoading()">Don't have an account? Sign Up</a>
+                    </div>
+                </div>
+                <div class="welcome-text welcome-signup">
+                    <h1>Welcome Back!</h1>
+                    <p>Join our community to get started.</p>
+                    <div class="toggle-link">
+                        <a onclick="toggleFormWithLoading()">Already have an account? Sign In</a>
                     </div>
                 </div>
             </div>
@@ -161,9 +141,138 @@
     </div>
 
     <script>
+        // Toggle with loading animation
+        function toggleFormWithLoading() {
+            const container = document.getElementById('container');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            
+            // Show loading animation
+            loadingOverlay.classList.add('active');
+            container.classList.add('loading');
+            
+            // Wait for 1 second before toggling
+            setTimeout(function() {
+                container.classList.toggle('active');
+                
+                // Hide loading animation
+                setTimeout(function() {
+                    loadingOverlay.classList.remove('active');
+                    container.classList.remove('loading');
+                }, 300);
+            }, 1000);
+        }
+        
+        // Original toggle function (kept for reference)
         function toggleForm() {
             const container = document.getElementById('container');
             container.classList.toggle('active');
+        }
+        
+        // Password visibility toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sign up password toggle
+            const toggleSignupPassword = document.getElementById('toggle-signup-password');
+            const passwordField = document.getElementById('password');
+            
+            if (toggleSignupPassword) {
+                toggleSignupPassword.addEventListener('click', function() {
+                    togglePasswordVisibility(passwordField, this);
+                });
+            }
+            
+            // Confirm password toggle
+            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+            const confirmPasswordField = document.getElementById('confirm_password');
+            
+            if (toggleConfirmPassword) {
+                toggleConfirmPassword.addEventListener('click', function() {
+                    togglePasswordVisibility(confirmPasswordField, this);
+                });
+            }
+            
+            // Sign in password toggle
+            const toggleSigninPassword = document.getElementById('toggle-signin-password');
+            const signinPasswordField = document.getElementById('signin-password');
+            
+            if (toggleSigninPassword) {
+                toggleSigninPassword.addEventListener('click', function() {
+                    togglePasswordVisibility(signinPasswordField, this);
+                });
+            }
+            
+            function togglePasswordVisibility(inputField, toggleButton) {
+                if (inputField.type === 'password') {
+                    inputField.type = 'text';
+                    toggleButton.src = './../img/eye.png';
+                } else {
+                    inputField.type = 'password';
+                    toggleButton.src = './../img/hidden.png';
+                }
+            }
+            
+            // Password validation
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm_password');
+            const passwordError = document.getElementById('password-error');
+            const confirmError = document.getElementById('error-message');
+            
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    validatePassword(this.value);
+                });
+            }
+            
+            if (confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', function() {
+                    validateConfirmPassword();
+                });
+            }
+            
+            function validatePassword(password) {
+                // Password must be 8-16 characters, include numbers, uppercase and lowercase letters, and symbols
+                const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^@a-zA-Z0-9]).{8,16}$/;
+                
+                if (!regex.test(password)) {
+                    passwordError.style.display = 'block';
+                    return false;
+                } else {
+                    passwordError.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            function validateConfirmPassword() {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    confirmError.style.display = 'block';
+                    return false;
+                } else {
+                    confirmError.style.display = 'none';
+                    return true;
+                }
+            }
+        });
+        
+        // Form validation
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const passwordError = document.getElementById('password-error');
+            const confirmError = document.getElementById('error-message');
+            
+            // Password validation regex
+            const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^@a-zA-Z0-9]).{8,16}$/;
+            
+            if (!regex.test(password)) {
+                passwordError.style.display = 'block';
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                confirmError.style.display = 'block';
+                return false;
+            }
+            
+            return true;
         }
     </script>
 </body>
