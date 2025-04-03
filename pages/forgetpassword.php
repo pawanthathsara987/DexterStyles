@@ -1,3 +1,12 @@
+<?php
+    // Start session at the beginning
+    session_start();
+    
+    include './../php_files/conn.php';
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
