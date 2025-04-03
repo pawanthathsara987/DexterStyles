@@ -17,8 +17,8 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="#search" class="search-icon"><img src="./img/search_icon.png" /></a>
-                <a href="#cart" class="cart-icon"><img src="./img/shopping_cart.png" /></a>
+                <a href="#search" class="search-icon">🔍</a>
+                <a href="#cart" class="cart-icon">🛒</a>
                 <button class="sign-in-btn" onclick="window.location.href='./pages/signin.php'">Sign In</button>
             </div>
         </nav>
