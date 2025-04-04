@@ -9,7 +9,7 @@
 <body>
     <header>
         <nav class="nav">
-            <div class="logo"><a href="./home.php"><img src="path-to-dexterstyles-logo.png" alt="DexterStyles Logo"></a></div>
+            <div class="logo"><a href="./home.php"><img src="./img/Logo.png" alt="DexterStyles Logo"></a></div>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#shop">Shop</a></li>
