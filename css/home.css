@@ -118,6 +118,9 @@ body {
     color: #fff;
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for readability */
+    animation: fadeInDown 2s ease-out;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-content p {
@@ -125,6 +128,8 @@ body {
     color: #fff;
     margin-bottom: 2rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Shadow for readability */
+    animation: fadeInUp 2s ease-out 0.3s;
+    animation-fill-mode: both;
 }
 
 .cta-button {
@@ -401,5 +406,27 @@ body {
 
     .hero-content p {
         font-size: 1.2rem;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

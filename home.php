@@ -51,10 +51,6 @@
                     <img src="./img/kids.jpg" alt="Kids Clothing">
                     <h3>Kids</h3>
                 </div>
-                <div class="category-card" data-category="bags">
-                    <img src="./img/bagsandshoes.jpg" alt="Bags">
-                    <h3>Bags & Shoes</h3>
-                </div>
             </div>
     </section>
 
