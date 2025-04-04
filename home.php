@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DexterStyles - Trendy Clothing for Every Style</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/home.css">
 </head>
 <body>
@@ -55,28 +56,69 @@
     </section>
 
     <section class="featured-products" id="shop">
-            <h2>Featured Products</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400?text=Product+1" alt="Product 1">
-                    <h3>Chic Summer Dress</h3>
-                    <p>$49.99</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400?text=Product+2" alt="Product 2">
-                    <h3>Stylish Jacket</h3>
-                    <p>$89.99</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400?text=Product+3" alt="Product 3">
-                    <h3>Trendy Jeans</h3>
-                    <p>$59.99</p>
-                    <button class="add-to-cart">Add to Cart</button>
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <div id="carousel1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./img/1.jpg" class="d-block w-100" alt="Summer Dress Front">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/2.jpg" class="d-block w-100" alt="Summer Dress Back">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/4.jpg" class="d-block w-100" alt="Summer Dress Detail">
+                    </div>
                 </div>
             </div>
-    </section>
+            <h3>Chic Summer Dress</h3>
+            <p>$49.99</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-card">
+            <div id="carousel2" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./img/11.jpg" class="d-block w-100" alt="Stylish Jacket Front">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/13.jpg" class="d-block w-100" alt="Stylish Jacket Back">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/14.jpg" class="d-block w-100" alt="Stylish Jacket Detail">
+                    </div>
+                </div>
+            </div>
+            <h3>Stylish Jacket</h3>
+            <p>$89.99</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="product-card">
+            <div id="carousel3" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./img/21.jpg" class="d-block w-100" alt="Trendy Jeans Front">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/22.jpg" class="d-block w-100" alt="Trendy Jeans Back">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/23.jpg" class="d-block w-100" alt="Trendy Jeans Detail">
+                    </div>
+                </div>
+            </div>
+            <h3>Trendy Jeans</h3>
+            <p>$59.99</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+</section>
 
     <section class="about" id="about">
             <h2>About DexterStyles</h2>
@@ -114,7 +156,7 @@
         <p class="footer-bottom">© 2025 DexterStyles. All rights reserved.</p>
     </footer>
 
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous">
         // Add click handlers for category cards (optional, for interactivity)
         document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('click', () => {
