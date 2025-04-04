@@ -30,6 +30,7 @@
                         $_SESSION['user_id'] = $user['id'];
                         $_SESSION['name'] = $user['name'];
                         $_SESSION['email'] = $user['email'];
+                        $_SESSION["loggedin"] = true;
                         
                         // Redirect to home page or dashboard
                         header("Location: ./../home.php");
