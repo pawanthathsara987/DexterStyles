@@ -256,7 +256,10 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+<<<<<<< HEAD
     margin-bottom: 10px;
+=======
+>>>>>>> sandeepa
 }
 
 .add-to-cart:hover {

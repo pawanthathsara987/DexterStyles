@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="./css/home.css">
 </head>
 <body>
+<<<<<<< HEAD
     <header>
         <nav class="nav">
             <div class="logo"><a href="./home.php"><img src="path-to-dexterstyles-logo.png" alt="DexterStyles Logo"></a></div>
+=======
+    <header class="header">
+        <nav class="nav">
+            <div class="logo"><img src="path-to-dexterstyles-logo.png" alt="DexterStyles Logo"></div>
+>>>>>>> sandeepa
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#shop">Shop</a></li>
@@ -25,7 +31,11 @@
     </header>
 
     <main>
+<<<<<<< HEAD
     <section class="hero">
+=======
+        <section class="hero">
+>>>>>>> sandeepa
             <div class="hero-image">
                 <img src="./img/fashion-model.jpg" alt="DexterStyles Fashion Model">
             </div>
@@ -34,9 +44,15 @@
                 <p>Elevate your wardrobe with our exclusive collection of trendy clothing.</p>
                 <button class="cta-button">Shop Now</button>
             </div>
+<<<<<<< HEAD
     </section>
 
     <section class="categories">
+=======
+        </section>
+
+        <section class="categories">
+>>>>>>> sandeepa
             <h2>Shop by Category</h2>
             <div class="category-grid">
                 <div class="category-card" data-category="women">
@@ -56,9 +72,15 @@
                     <h3>Bags & Shoes</h3>
                 </div>
             </div>
+<<<<<<< HEAD
     </section>
 
     <section class="featured-products" id="shop">
+=======
+        </section>
+
+        <section class="featured-products" id="shop">
+>>>>>>> sandeepa
             <h2>Featured Products</h2>
             <div class="product-grid">
                 <div class="product-card">
@@ -80,6 +102,7 @@
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
             </div>
+<<<<<<< HEAD
     </section>
 
     <section class="about" id="about">
@@ -87,6 +110,15 @@
             <p>DexterStyles is your destination for cutting-edge fashion, blending quality craftsmanship with contemporary designs. We celebrate individuality and style, offering eco-friendly and trendy clothing for all.</p>
             <button class="learn-more">Learn More</button>
     </section>
+=======
+        </section>
+
+        <section class="about" id="about">
+            <h2>About DexterStyles</h2>
+            <p>DexterStyles is your destination for cutting-edge fashion, blending quality craftsmanship with contemporary designs. We celebrate individuality and style, offering eco-friendly and trendy clothing for all.</p>
+            <button class="learn-more">Learn More</button>
+        </section>
+>>>>>>> sandeepa
     </main>
 
     <footer class="footer" id="contact">
