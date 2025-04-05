@@ -1,12 +1,23 @@
 
-        // Function to change the main product image when a thumbnail is clicked
+        // // Function to change the main product image when a thumbnail is clicked
+        // function changeImage(imagePath, thumbnailElement) {
+        //     document.getElementById('mainProductImage').src = mainProductImage;
+            
+        //     // Remove active class from all thumbnails
+        //     const thumbnails = document.querySelectorAll('.img-thumbnail');
+        //     thumbnails.forEach(thumb =>thumb.classList.remove('thumbnail-active'));
+            
+            
+        //     // Add active class to clicked thumbnail
+        //     thumbnailElement.classList.add('thumbnail-active');
+        // }
+        
         function changeImage(imagePath, thumbnailElement) {
             document.getElementById('mainProductImage').src = imagePath;
             
             // Remove active class from all thumbnails
             const thumbnails = document.querySelectorAll('.img-thumbnail');
-            thumbnails.forEach(thumb =>thumb.classList.remove('thumbnail-active'));
-            
+            thumbnails.forEach(thumb => thumb.classList.remove('thumbnail-active'));
             
             // Add active class to clicked thumbnail
             thumbnailElement.classList.add('thumbnail-active');
@@ -75,15 +86,15 @@
             }
         }
 
-        function changeImage(imageSrc, thumbnailElement) {
-            // Update main product image
-            document.getElementById('main-product-image').src = imageSrc;
+        // function changeImage(imageSrc, thumbnailElement) {
+        //     // Update main product image
+        //     document.getElementById('main-product-image').src = imageSrc;
             
-            // Remove active class from all thumbnails
-            const thumbnails = document.querySelectorAll('.thumbnail-gallery .img-thumbnail');
-            thumbnails.forEach(thumb => thumb.classList.remove('thumbnail-active'));
+        //     // Remove active class from all thumbnails
+        //     const thumbnails = document.querySelectorAll('.thumbnail-gallery .img-thumbnail');
+        //     thumbnails.forEach(thumb => thumb.classList.remove('thumbnail-active'));
             
-            // Add active class to clicked thumbnail
-            thumbnailElement.classList.add('thumbnail-active');
-        }
+        //     // Add active class to clicked thumbnail
+        //     thumbnailElement.classList.add('thumbnail-active');
+        // }
         

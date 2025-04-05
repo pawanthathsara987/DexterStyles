@@ -2,37 +2,30 @@
 // Include database connection 
    include('root_dex.php');
 
-//    if (isset($_GET['p_id'])) {
-//     $p_id = $_GET['p_id']; // Convert to integer for security
+   if (isset($_GET['p_id'])) {
+    $p_id = $_GET['p_id']; // Convert to integer for security
 
-// temparary
-     $p_id = isset($_GET['p_id']) ? $_GET['p_id'] : "p001"; 
+    // temparary
+    //  $p_id = isset($_GET['p_id']) ? $_GET['p_id'] : "1"; 
 
 
     // Fetch product data from database
-//    $sql = "SELECT * FROM product_details WHERE p_id = ?"; 
-
    $sql = "SELECT p.*, c.c_name, pi.img_path 
         FROM product_details p 
         JOIN category c ON p.c_id = c.c_id 
         LEFT JOIN product_images pi ON p.p_id = pi.p_id 
         WHERE p.p_id = ? "; 
-        //LIMIT 1";  Use LIMIT 1 to fetch only one product
-
-   $stmt = $conn->prepare($sql);
-
-    // $stmt->bind_param("i", $_id); //"s" because id is a string
-    // $stmt->execute();
-    // $result = $stmt->get_result();
+       
+       $stmt = $conn->prepare($sql);
 
     //temparary
-    if ($stmt) {
-        $stmt->bind_param("s", $p_id); // "s" because id is a string
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // if ($stmt) {
 
+      $stmt->bind_param("i", $p_id); //"s" because id is a string
+     $stmt->execute();
+     $result = $stmt->get_result();
 
-
+   
     // Check if product exists
     if ($result->num_rows > 0) {
         $product = $result->fetch_assoc();
@@ -97,7 +90,7 @@ $conn->close();
          <nav aria-label="breadcrumb" class="small mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                <li class="breadcrumb-item"><a href="category.php?c_id=<?php echo $category_id; ?>"><?php echo $c_name; ?></a></li>
+                <li class="breadcrumb-item"><a href="productdetails.php?c_id=<?php echo $p_id; ?>"><?php echo $c_name; ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo $p_title; ?></li>
             </ol>
         </nav>
@@ -116,10 +109,8 @@ $conn->close();
                           echo '<div class="col-3 mb-2"><img src="' . $p_mimage . '" class="img-thumbnail thumbnail-active" onclick="changeImage(\'' . $p_mimage. '\', this)"></div>';
                         
                         foreach ($images as $image) {
-                                // echo '<div class="col-3 mb-2"><img src="' . $image . '" class="img-thumbnail" onclick="changeImage(\'' . $image . '\', this)"></div>';
-                                //echo '<div class="col-3 mb-2"><img src="' . $image . '" class="img-thumbnail" onclick="changeImage(\'' . $image . '\', this)"></div>';
-                                echo '<div class="col-3 mb-2"><img src="' . $image . '" class="img-thumbnail" onclick="changeImage(\'' . $image . '\', this)"></div>';
-                            
+                                 echo '<div class="col-3 mb-2"><img src="' . $image . '" class="img-thumbnail" onclick="changeImage(\'' . $image . '\', this)"></div>';
+                               //echo '<div class="col-3 mb-2"><img src="' . $image . '" class="img-thumbnail" onclick="changeImage(\'' . $image . '\', this)"></div>';
                             }
                         ?>
                     </div>    
@@ -184,7 +175,10 @@ $conn->close();
                             
                             <!-- Action buttons next to quantity -->
                             <div class="ms-3">
-                                <button class="btn btn-primary" id="addToCartBtn">ADD TO CART</button>
+                                <!-- <button class="btn btn-primary" id="addToCartBtn">ADD TO CART</button> -->
+                                <a href="add_to_cart.php?p_id=<?php echo $p_id; ?>" class="btn btn-primary" id="addToCartBtn">ADD TO CART</a>
+
+
                             </div>
                             <div class="ms-2">
                                 <button class="btn btn-outline-secondary btn-icon" id="wishlistBtn">
@@ -202,7 +196,8 @@ $conn->close();
                     
                     <!-- Buy Now Button -->
                     <div class="mb-4">
-                        <button class="btn btn-outline-dark w-100" id="buyNowBtn">BUY IT NOW</button>
+                        <!-- <button class="btn btn-outline-dark w-100" id="buyNowBtn">BUY IT NOW</button> -->
+                        <a href="BuyProduct.php?p_id=<?php echo $p_id; ?>" class="btn btn-outline-dark w-100" id="buyNowBtn">BUY IT NOW</a>
                     </div><br>
                     <!-- Shipping & delivery info -->
                     <div class="shipping-info mb-4">
@@ -262,7 +257,7 @@ $conn->close();
                     </div>
                     <div class="tab-pane fade" id="shipping" role="tabpanel">
                         <h5>Shipping Policy</h5>
-                        <p>Details about shipping and returns policy here.</p>
+                        <p>Details about shipping and returns<a href="https://www.bigcommerce.com/articles/ecommerce/privacy-policy/"> policy here.</a></p>
                     </div>
                 </div>
             </div>
