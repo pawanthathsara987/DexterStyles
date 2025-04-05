@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Include Footer -->
        <div id="footer"></div>
 
-    <script src="script.js"></script> 
+    <script src="profile.js"></script> 
 
     
 
