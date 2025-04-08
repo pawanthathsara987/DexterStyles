@@ -135,7 +135,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clothing E-Commerce Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="profile1.css ">
+    <link rel="stylesheet" href="profile.css ">
 </head>
 <body>
    <div class="d-flex">
@@ -328,7 +328,7 @@ $conn->close();
    
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="profile1.js"></script>
+<script src="profile.js"></script>
 
 </body>
 </html>
