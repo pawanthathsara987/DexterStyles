@@ -1,168 +1,93 @@
-// Function to edit profile (show edit options)
-function editProfile() {
-    document.getElementById('editProfileForm').style.display = 'flex'; 
-    // function saveFunction(){
-    //     document.getElementById('editProfileForm').style.display = 'flex';
-    // }
+// Function to show different sections
+function showSection(sectionId) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.style.display = 'none';
+    });
     
+    // Show the selected section
+    document.getElementById(sectionId).style.display = 'block';
     
-}
-function saveFunction(event) {
-    event.preventDefault(); // Prevent form submission (page reload)
+    // Update active menu item
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Find the clicked menu item and add active class
+    //  event.target.classList.add('active');
+
+    document.querySelector(`.menu-item[onclick="showSection('${sectionId}')"]`).classList.add('active');
 }
 
+// Initialize the page - show personal info by default
+document.addEventListener('DOMContentLoaded', function() {
+    // Show personal info section by default
+    document.getElementById('personal-info').style.display = 'block';
+    
+    // Set the first menu item as active
+    document.querySelector('.menu-item').classList.add('active');
+  
+     // Initialize message timers
+     initializeMessageTimers();
+
+     // Attach logout event listener
+     document.getElementById("my5").addEventListener("click", logout);
+});
 
 function cancelEdit(){
-          document.getElementById('editProfileForm').style.display = 'none';  
-    
+    document.getElementById('editProfileForm').style.display = 'none';  
+}
+
+// Function to make success messages disappear after a few seconds
+function initializeMessageTimers() {
+    const messages = document.querySelectorAll('.alert');
+    messages.forEach(message => {
+        setTimeout(() => {
+            message.style.opacity = '0';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 500);
+        }, 5000);
+    });
 }
 
 
-// Add this to your script.js file, at the beginning or inside a document ready function
 document.addEventListener("DOMContentLoaded", function() {
-    // Initially hide card elements
-    document.getElementById('creditcard').style.display = 'none';
-    document.getElementById('card-details').style.display = 'none';
+    // Get references to elements
+    const logoutBtn = document.getElementById("logoutBtn");
+    const logoutOverlay = document.getElementById("logoutOverlay");
+    const confirmLogout = document.getElementById("confirmLogout");
+    const cancelLogout = document.getElementById("cancelLogout");
+    const profileImg = document.getElementById("profileImg");
+    const username = document.getElementById("username");
+    const userEmail = document.getElementById("userEmail");
+
+    // Show logout popup when logout button is clicked
+    logoutBtn.addEventListener("click", function() {
+        logoutOverlay.style.display = "flex";
+    });
+
+    // Handle confirm logout
+    confirmLogout.addEventListener("click", function() {
+        // Change profile picture to blank
+        profileImg.src = "images/blankprofile.jpg";
+        
+        // Hide username and email
+        username.classList.add("hidden");
+        userEmail.classList.add("hidden");
+        
+        // Close the popup
+        logoutOverlay.style.display = "none";
+        
+        
+        // For demo purposes, alert that logout was successful
+        alert("You have been logged out successfully!");
+    });
+
+    // Handle cancel logout
+    cancelLogout.addEventListener("click", function() {
+        // Close the popup without logging out
+        logoutOverlay.style.display = "none";
+    });
 });
 
-// Variable to track if card details are visible
-let cardDetailsVisible = false;
-
-function showCardDetails() {
-    // Get the card image and details elements
-    const cardImage = document.getElementById('creditcard');
-    const cardDetails = document.getElementById('card-details');
-
-    document.getElementById('editProfileForm').style.display = 'none'; // Hide edit profile form
-    
-    // Toggle the visibility based on current state
-    if (cardDetailsVisible) {
-        // If currently visible, hide them
-        cardImage.style.display = 'none';
-        cardDetails.style.display = 'none';
-        cardDetailsVisible = false;
-    } 
-    else {
-        // If currently hidden, show them and hide other content
-        document.getElementById('editProfileForm').style.display = 'none';
-        cardImage.style.display = 'block';
-        cardDetails.style.display = 'flex';
-        cardDetailsVisible = true;
-    }
-}
-
-// Function to show settings (brightness, battery saver, etc.)
-function showSettings() {
-    // Create the settings modal with the display options
-    let settingsModal = `
-        <div class="settings-modal" align="right">
-            <h2>Settings</h2><br><br>
-            
-            <div class="settings-option">
-                <label>Version: 1.0.0</label>
-            </div>
-            
-            <div class="settings-option">
-                <label>Change Theme:</label>
-                <button onclick="changeTheme('light')">Light</button>
-                <button onclick="changeTheme('dark')">Dark</button>
-            </div>
-            <div class="settings-option" onclick="clearCache()">Clear Cache</div>
-            <div class="settings-option" onclick="viewPrivacyPolicy()">Privacy Policy</div>
-            <div class="settings-option" onclick="Changepassword()">Change password</div>
-            <div class="settings-option" onclick="toggleNetworkAcceleration()">Network Acceleration</div>
-           <button onclick="closeSettings()">Close</button>
-        </div>
-    `;
-
-    // Insert the modal into the page
-    document.body.insertAdjacentHTML('beforeend', settingsModal);
-}
-
-function closeSettings() {
-    // Close the settings modal
-    let modal = document.querySelector('.settings-modal');
-    modal.remove();
-}
-
-function changeTheme(theme) {
-    // Apply light or dark theme
-    if (theme === 'dark') {
-        document.body.classList.add('dark-theme');
-        document.body.classList.remove('light-theme');
-    } else {
-        document.body.classList.add('light-theme');
-        document.body.classList.remove('dark-theme');
-    }
-}
-
-function changeBrightness(brightness) {
-    // Change the brightness of the page
-    if (brightness === 'dark') {
-        document.body.style.filter = 'brightness(50%)';
-    } else {
-        document.body.style.filter = 'brightness(100%)';
-    }
-}
-
-function clearCache() {
-    // Simulate cache clear action
-    alert('Cache has been cleared!');
-}
-
-function viewPrivacyPolicy() {
-    // Simulate viewing privacy policy
-    alert('Viewing Privacy Policy...');
-}
-
-function Changepassword() {
-    // Simulate toggling notification settings
-    alert('Change password');
-}
-
-function toggleNetworkAcceleration() {
-    // Simulate toggling network acceleration
-    alert('Toggled Network Acceleration');
-}
-
-
-
-// Function to handle logout confirmation
-document.addEventListener("DOMContentLoaded", function () {
-    function logout() {
-        // Get user profile elements
-        let profileImg = document.querySelector(".profile-sidebar img");
-        let userName = document.querySelector(".profile-sidebar h5");
-        let userEmail = document.querySelector(".profile-sidebar p");
-
-        // Create the logout popup
-        let popup = document.createElement("div");
-        popup.id = "logoutPopup";
-        popup.innerHTML = `
-            <img src="${profileImg.src}" alt="Profile Picture" style="width:80px; height:80px; border-radius:50%; margin-bottom:10px;">
-            <h5>${userName.innerText}</h5>
-            <p>Are you sure you want to log out?</p>
-            <button id="confirmLogout">Confirm Logout</button>
-            <button id="cancelLogout">Cancel</button>
-        `;
-
-        // Append popup to the body
-        document.body.appendChild(popup);
-
-        // Handle Confirm Logout button
-        document.getElementById("confirmLogout").addEventListener("click", function () {
-            profileImg.src = "images/blankprofile.jpg";  // Remove profile picture
-            userName.classList.add("hidden"); // Hide username
-            userEmail.classList.add("hidden"); // Hide email
-            document.body.removeChild(popup); // Remove popup
-        });
-
-        // Handle Cancel Logout button
-        document.getElementById("cancelLogout").addEventListener("click", function () {
-            document.body.removeChild(popup); // Close popup
-        });
-    }
-
-    // Attach the logout function to the logout button
-    document.getElementById("my5").addEventListener("click", logout);
-});

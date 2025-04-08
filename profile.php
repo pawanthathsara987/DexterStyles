@@ -1,64 +1,147 @@
 <?php
+include('root_dex.php'); 
+
 session_start();
 
-//get id 
+// Get user ID from session or GET parameter
+// $u_id = isset($_GET['id']) ? intval($_GET['id']) : (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0);
 
-if (!isset($_SESSION['Ad_id'])) {
-    $_SESSION['Ad_id'] = 2; // Temporary fix: Replace with a valid admin ID
+// // Validate user ID to prevent SQL injection
+// if ($u_id <= 0) {
+//     echo "Invalid user ID";
+//     exit;
+// }
+
+
+//Tempary
+if (!isset($_SESSION['id'])) {
+    $_SESSION['id'] = 2; 
 }
 
-include('root.php');
+$u_id = $_SESSION['id']; 
 
-$admin_id = $_SESSION['Ad_id']; 
+// Combined query to get user and order details
+$sql = "SELECT u.*, o.order_id, o.total_price, o.shipping_address, 
+                       o.shipping_cost, o.product_id,
+                       p.p_title, p.p_mimage
+                FROM user u
+                LEFT JOIN successful_orders o ON u.id = o.user_id
+                LEFT JOIN product_details p ON o.product_id = p.p_id
+                WHERE u.id = ?";
 
-// Debugging: Check if session is set
-// echo "Admin ID from Session: " . $admin_id;
-//  <img src="editprofilebackgrount" >
+   $stmt = $conn->prepare($sql);
+   $stmt->bind_param("i", $u_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
 
-// Fetch admin details from the database
-$sql = "SELECT * FROM adminDetails WHERE Ad_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $admin_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$admin = $result->fetch_assoc();
-
-$background_image = !empty($admin['background_image']) ? $admin['background_image'] : 'images/editprofilebackgrount.jpg';
-
-$message = ''; // Variable to store the success or error message
-
-// If the form is submitted, update the records
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $Ad_name = $_POST['Admin_name'];
-    $Ad_email = $_POST['A_email'];
-    $Ad_address = $_POST['A_address'];
-    $Ad_phone_number = $_POST['A_phone_number'];
-    $Ad_date_of_birth = $_POST['A_date_of_birth'];
-    $Ad_gender = $_POST['A_gender'];
-    $Ad_city = $_POST['A_city'];
-    $Ad_district = $_POST['A_district'];
-    $Ad_state = $_POST['A_state'];
-
-    if(isset($_POST['save'])){
-        $sql_update = "UPDATE adminDetails SET Admin_name=?, A_email=?, A_address=?, A_phone_number=?, A_date_of_birth=?, A_gender=?, A_city=?, A_district=?, A_state=? WHERE Ad_id=?";
-        $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("sssssssssi", $Ad_name, $Ad_email, $Ad_address, $Ad_phone_number, $Ad_date_of_birth, $Ad_gender, $Ad_city, $Ad_district, $Ad_state, $admin_id);
-        
-        if ($stmt_update->execute()) {
-            $message = '<div class="alert alert-success" role="alert">Profile updated successfully!</div>';
-
-        } else {
-            
-            $message = '<div class="alert alert-danger" role="alert">Error updating profile!</div>';
-        }
+        $u_id = $user['id'];
+        $u_name = $user['name'];
+        $u_email = $user['email'];
+        $u_password = $user['password'];
+        $u_mobile_no = $user['mobile_no'];
+        $total_price = $user['total_price'];
+        $shipping_address = $user['shipping_address'];
+        $shipping_cost = $user['shipping_cost'];
+        $p_id = $user['product_id'];
+        $p_title = $user['p_title'];
+        $p_mimage = $user['p_mimage'];
+    } else {
+        echo "User not found.";
+        exit;
     }
 
+    $stmt->close();
+ 
+
+$message = ''; // Variable to store the success or error message
+$shipping_address_message = '';
+
+if (isset($_POST['save'])) {
+    $new_name = $_POST['name'];
+    $new_email = $_POST['email'];
+    $new_password = $_POST['password'];
+    $new_mobile = $_POST['mobile_no'];
     
-   
+    $sql_update = "UPDATE user SET name=?, email=?, password=?, mobile_no=? WHERE id=?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("ssssi", $new_name, $new_email, $new_password, $new_mobile, $u_id);
+
+    if ($stmt_update->execute()) {
+        $message = '<div class="alert alert-success" role="alert">Profile updated successfully!</div>';
+        // Update local variables with new values
+        $u_name = $new_name;
+        $u_email = $new_email;
+        $u_password = $new_password;
+        $u_mobile_no = $new_mobile;
+    } else {
+        $message = '<div class="alert alert-danger" role="alert">Error updating profile!</div>';
+    }
+
+    $stmt_update->close();
 }
-?>
+
+// Get user orders
+$orders_sql = "SELECT o.*, p.p_title, p.p_mimage 
+               FROM successful_orders o 
+               JOIN product_details p ON o.product_id = p.p_id 
+               WHERE o.user_id = ?";
+
+$stmt_orders = $conn->prepare($orders_sql);
+$stmt_orders->bind_param("i", $u_id);
+$stmt_orders->execute();
+$orders_result = $stmt_orders->get_result();
+$orders = [];
+
+while ($order = $orders_result->fetch_assoc()) {
+    $orders[] = $order;
+}
+
+$stmt_orders->close();
+
+// if (isset($_POST['save_address'])) {
+//     $new_address = $_POST['shipping_address'];
     
+//     $sql_ad_update = "UPDATE successful_orders SET shipping_address=? WHERE order_id=?";
+//     $stmt_ad_update = $conn->prepare($sql_ad_update);
+//     $stmt_ad_update->bind_param("si", $new_address, $order_id); // make sure $order_id is defined
+
+//     if ($stmt_ad_update->execute()) {
+//         $message1 = '<div class="alert alert-success" role="alert">Shipping address updated successfully!</div>';
+//         $shipping_address = $new_address;
+//     } else {
+//         $message1 = '<div class="alert alert-danger" role="alert">Error updating shipping address!</div>';
+//     }
+
+//     $stmt_ad_update->close();
+// }
+
+// Update shipping address
+if (isset($_POST['save_address'])) {
+    $new_address = $_POST['shipping_address'];
+    
+    $sql_update_address = "UPDATE successful_orders SET shipping_address=? WHERE user_id=?";
+    $stmt_update_address = $conn->prepare($sql_update_address);
+    $stmt_update_address->bind_param("si", $new_address, $u_id);
+
+    if ($stmt_update_address->execute()) {
+        $shipping_address_message= '<div class="alert alert-success" role="alert">Shipping address updated successfully!</div>';
+        $shipping_address = $new_address;
+    } else {
+        $shipping_address_message = '<div class="alert alert-danger" role="alert">Error updating shipping address!</div>';
+    }
+
+    $stmt_update_address->close();
+}
+
+$conn->close();
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,119 +149,201 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clothing E-Commerce Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="profile(css).css ">
+    <link rel="stylesheet" href="profile.css ">
 </head>
 <body>
-    
-
-    <!-- Include Header -->
-
-    <div id="header"></div>
-    
-    <div class="d-flex">
+   <div class="d-flex">
         <div class="profile-sidebar">
             <div class="text-center">
-                <img src="images/user.jpg" alt="Profile Picture">
-                <!-- <h5 name="admin_name" id="ad">John Doe</h5>
-                <p name="admin_email" id="ae">john.doe@example.com</p> -->
-                <h5 id="ad"><?php echo $admin['Admin_name']; ?></h5>
-                <p id="ae"><?php echo $admin['A_email']; ?></p>
+                <img src="images/user.jpg" alt="Profile Picture" class="profile-pic" id="pro">
+                <h5 id="ad"><?php echo $u_name; ?></h5>
+                <p id="ae"><?php echo $u_email; ?></p>
             </div></br>
+            <div class="menu-item active" onclick="showSection('personal-info')">Personal Information</div> 
+                <div class="menu-item" onclick="showSection('orders')">Orders</div> 
+                <div class="menu-item" onclick="showSection('shipping')">Shipping Address</div>
+                <div class="menu-item" onclick="showSection('payment')">Payment</div>
+                <div class="menu-item" onclick="showSection('settings')">Settings</div>
+                <div class="menu-item text-danger" onclick="showSection('logout')" id="my5">Log Out</div>
+            </div>
 
-           
-            <!-- <div class="menu-item" id="my1" onclick="showFavorites()">My Favourite</div>  -->
-            <div class="menu-item" id="my2" onclick="editProfile()">Edit Profile</div> 
-            <div class="menu-item" id="my3" onclick="showCardDetails()">Card Details</div> 
-            <div class="menu-item" id="my4" onclick="showSettings()">Settings</div>
-            <div class="menu-item text-danger" id="my5" name="logout" onclick="logout()" >Log Out</div>
-        </div> 
-        
-    </div> 
-  
+            <!-- Main Content Area -->
+            <div class="profile-content p-4">
 
-    <div class="editprofile-container" id = "editProfileForm" >
-        <h2>Edit Profile</h2> 
+                <!-- Personal Information Section  -->
+                <div id="personal-info" class="content-section">
+                    <h3>Personal Information</h3><br>
+                      
+                <!-- Display success/error message -->
+                  <div id="message-container">
+                    <?php echo $message; ?>
+                  </div>
 
-         <!-- Display the message here if available -->
-        <?php echo $message; ?>
-        
-        <form method="POST" action="" name = "editProfileForm" >
-            <div class="form-group">
-                <label>Name:</label>
-                <input type="text" name="Admin_name" value="<?php echo $admin['Admin_name']; ?>" required>
+                    <form method="POST" action="">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="<?php echo $u_name; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<?php echo $u_email; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="<?php echo $u_password; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile_no" class="form-label">Mobile Number</label>
+                            <input type="text" class="form-control" id="mobile_no" name="mobile_no" value="<?php echo $u_mobile_no; ?>">
+                        </div>
+                        <button type="submit" name="save" class="btn btn-primary" onclick="saveFunction()">Save Changes</button>
+                        <button type="button" name="cancle" class="cancel-btn" onclick="cancelEdit()" >Cancel</button>
+                    </form>
+                </div>
+                
+                <!-- Orders Section -->
+          <div id="orders" class="content-section">
+               <h3><center>Your Orders</center></h3><br>
+                   <?php if (count($orders) > 0): ?>
+                       <div class="row">
+                          <?php foreach ($orders as $order): ?>
+                             <div class="col-md-6 mb-4">
+                                  <div class="card order-card" onclick="window.location.href='oneproduct.php'">   
+                                    <!-- ?id=<?php echo $p_id;?> -->
+
+                                    <div class="card-body">
+                                       <!-- Image centered at the top -->
+                                         <div class="text-center mb-3">
+                                         <?php if (!empty($order['p_mimage'])): ?>
+                                        <img src="<?php echo htmlspecialchars($order['p_mimage']); ?>" alt="Product" class="img-fluid" style="max-width: 25%; height: auto;">
+                                        <?php endif; ?>
+                                    </div>
+                            
+                            <!-- Order information below the image -->
+                            <div class="text-center">
+                                <h5 class="card-title"><?php echo $order['p_title']; ?></h5>
+                                <h7 class="card-text">Order ID: <?php echo $order['order_id']; ?></h7></br>
+                                <h7 class="card-text">Price: Rs.<?php echo $order['total_price']; ?></h7><br>
+                                <h7 class="card-text">Shipping: Rs.<?php echo $order['shipping_cost']; ?></h7>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p>No orders found.</p>
+    <?php endif; ?>
+</div>
+
+     <!-- Shipping Address Section -->
+     <div id="shipping" class="content-section" style="display:none;">
+                <h3>Shipping Address</h3><br>
+
+                <!-- Display success/error message -->
+                <div id="shipping_address_message-container">
+                    <?php echo $shipping_address_message; ?>
+                </div>
+
+                <form method="POST" action="">
+                    <div class="mb-3">
+                        <label for="shipping_address" class="form-label"><?php echo $u_name; ?> Shipping Address is:</label><br>
+                        <textarea class="form-control" id="shipping_address" name="shipping_address" rows="4"><?php echo $shipping_address; ?></textarea>
+                    </div>
+                    <button type="submit" name="save_address" class="btn btn-primary">Save Address</button>
+
+                </form>
             </div>
-            <div class="form-group">
-                <label>Email:</label>
-                <input type="email" name="A_email" value="<?php echo $admin['A_email']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label>Address:</label>
-                <input type="text" name="A_address" value="<?php echo $admin['A_address']; ?>">
-            </div>
-            <div class="form-group">
-                <label>Phone Number:</label>
-                <input type="text" name="A_phone_number" value="<?php echo $admin['A_phone_number']; ?>">
-            </div>
-            <div class="form-group">
-                <label>Date of Birth:</label>
-                <input type="date" name="A_date_of_birth" value="<?php echo $admin['A_date_of_birth']; ?>">
-            </div>
-            <div class="form-group">
-                <label>Gender:</label>
-                <select name="A_gender">
-                    <option value="Male" <?php if($admin['A_gender'] == 'Male') echo 'selected'; ?>>Male</option>
-                    <option value="Female" <?php if($admin['A_gender'] == 'Female') echo 'selected'; ?>>Female</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>City:</label>
-                <input type="text" name="A_city" value="<?php echo $admin['A_city']; ?>">
-            </div>
-            <div class="form-group">
-                <label>District:</label>
-                <input type="text" name="A_district" value="<?php echo $admin['A_district']; ?>">
-            </div>
-            <div class="form-group">
-                <label>State:</label>
-                <input type="text" name="A_state" value="<?php echo $admin['A_state']; ?>">
-            </div>
-            <div class="form-buttons">
-                <button type="submit" class="save-btn" onclick="saveFunction()" name= "save" >Save Changes</button>
-                <button type="button" class="cancel-btn" onclick="cancelEdit()" name="cancle">Cancel</button>
-            
-            </div>
-        </form>
-    </div>
-    
 
 
-    <!-- <div class="card" id="creditcard" onclick="displayCardDetails()">
-        <img src="images/credit_cards.jpg" alt="Card Image" class="card-image">
-      
-    </div> -->
+    <!-- Centered box with medium size -->
+    <div id="payment" class="content-section">
+        <h3 class="text-center">Payment Methods</h3>
+        <div class="form-lable" ><br>
+            <label for="card_number" class="form-label">Card Number</label>
+            <h6>XXXX-XXXX-XXXX-XXXX</h6><br>
 
-    <div class="card" id="creditcard">
-    <img src="images/credit_cards.jpg" alt="Card Image" class="card-image">
-     </div>
+            <label for="payment_type" class="form-label">Payment Type</label>
+            <h6>Online</h6><br>
 
-     <!-- Card Details (to be shown on click)  -->
-    <div id="card-details" class="card-details" >
-         <div class="left">
-            <!-- <img src="credit_cards.jpg" alt="Card Image" class="card-image">   -->
-        </div> 
-        <div class="right">
-            <p><h3 id="cardholder-name">Cardholder Name:</h3>W.J.smith</p>
-            <p><h5>Card Type:</h5> <lable id="card-type">Visa</lable></p>
-            <p><h5>Account Number:</h5> <span id="account-number">**** **** **** *234</span></p>
+            <label for="payment_methods" class="form-label">Payment Methods</label>
+            <h6>
+                <img src="images/visa.png" alt="Visa" class="img-fluid">
+                <img src="images/paypal.png" alt="PayPal" class="img-fluid" >
+                <img src="images/card.png" alt="Mastercard" class="img-fluid" >
+            </h6>
         </div>
     </div>
+</div>
 
-    <!-- Include Footer -->
-       <div id="footer"></div>
+                
+                <!-- Settings Section -->
+                <div id="settings" class="content-section" style="display:none;">
+                    <h3>Settings</h3>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="emailNotif">
+                        <label class="form-check-label" for="emailNotif">Email Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsNotif">
+                        <label class="form-check-label" for="smsNotif">SMS Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsNotif">
+                        <label class="form-check-label" for="smsNotif">popup Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsNotif">
+                        <label class="form-check-label" for="smsNotif">SMS Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsNotif">
+                        <label class="form-check-label" for="smsNotif">SMS Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsNotif">
+                        <label class="form-check-label" for="smsNotif">SMS Notifications</label>
+                    </div>
+                    
+                    
+                </div>
+            </div>
 
-    <script src="profile.js"></script> 
+              <!-- logout Section -->
+      
+  <!-- <div id="logoutBtn" class="content-section" style="display:none;">
+        <div id="logoutOverlay" class="logout-overlay">
+        <div class="logout-popup">
+            <img src="images/user.jpg" alt="Profile Picture">
+            <h5 id="popupUsername"><?php echo $u_name?></h5>
+            <p>Are you sure you want to log out?</p>
+            <button id="confirmLogout">Confirm Logout</button>
+            <button id="cancelLogout">Cancel</button>
+        </div>
+    </div>
+</div> -->
 
-    
+<div id="logoutBtn" class="content-section" style="display:none;">>
+
+<div id="logoutOverlay" class="logout-overlay">
+    <div class="logout-popup">
+        <img src="images/user.jpg" alt="Profile Picture">
+        <h5><?php echo $u_name; ?></h5>
+        <p>Are you sure you want to log out?</p>
+        <button id="confirmLogout">Confirm Logout</button>
+        <button id="cancelLogout">Cancel</button>
+    </div>
+</div>
+</div>
+
+    </div>
+</div>
+ 
+   
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="profile.js"></script>
 
 </body>
 </html>
