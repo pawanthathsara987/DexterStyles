@@ -4,21 +4,23 @@ include('root_dex.php');
 session_start();
 
 // Get user ID from session or GET parameter
-// $u_id = isset($_GET['id']) ? intval($_GET['id']) : (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0);
+$u_id = isset($_GET['id']) ? intval($_GET['id']) : (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
 
-// // Validate user ID to prevent SQL injection
-// if ($u_id <= 0) {
-//     echo "Invalid user ID";
-//     exit;
-// }
+// Validate user ID to prevent SQL injection
+if ($u_id <= 0) {
+    echo "Invalid user ID";
+    exit;
+}
 
 
 //Tempary
-if (!isset($_SESSION['id'])) {
-    $_SESSION['id'] = 2; 
-}
+// if (!isset($_SESSION['id'])) {
+//     $_SESSION['id'] = 2; 
+// }
 
-$u_id = $_SESSION['id']; 
+// $u_id = $_SESSION['id']; 
+
+
 
 // Combined query to get user and order details
 $sql = "SELECT u.*, o.order_id, o.total_price, o.shipping_address, 
@@ -101,22 +103,6 @@ while ($order = $orders_result->fetch_assoc()) {
 
 $stmt_orders->close();
 
-// if (isset($_POST['save_address'])) {
-//     $new_address = $_POST['shipping_address'];
-    
-//     $sql_ad_update = "UPDATE successful_orders SET shipping_address=? WHERE order_id=?";
-//     $stmt_ad_update = $conn->prepare($sql_ad_update);
-//     $stmt_ad_update->bind_param("si", $new_address, $order_id); // make sure $order_id is defined
-
-//     if ($stmt_ad_update->execute()) {
-//         $message1 = '<div class="alert alert-success" role="alert">Shipping address updated successfully!</div>';
-//         $shipping_address = $new_address;
-//     } else {
-//         $message1 = '<div class="alert alert-danger" role="alert">Error updating shipping address!</div>';
-//     }
-
-//     $stmt_ad_update->close();
-// }
 
 // Update shipping address
 if (isset($_POST['save_address'])) {
@@ -149,7 +135,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clothing E-Commerce Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="profile.css ">
+    <link rel="stylesheet" href="profile1.css ">
 </head>
 <body>
    <div class="d-flex">
@@ -324,7 +310,7 @@ $conn->close();
     </div>
 </div> -->
 
-<div id="logoutBtn" class="content-section" style="display:none;">>
+<div id="logout" class="content-section" style="display:none;">
 
 <div id="logoutOverlay" class="logout-overlay">
     <div class="logout-popup">
@@ -336,14 +322,13 @@ $conn->close();
     </div>
 </div>
 </div>
-
-    </div>
-</div>
+ </div> 
+<!-- </div> -->
  
    
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="profile.js"></script>
+<script src="profile1.js"></script>
 
 </body>
 </html>

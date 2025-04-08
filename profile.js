@@ -17,6 +17,10 @@ function showSection(sectionId) {
     //  event.target.classList.add('active');
 
     document.querySelector(`.menu-item[onclick="showSection('${sectionId}')"]`).classList.add('active');
+    if (sectionId === 'logout') {
+        document.getElementById('logoutOverlay').style.display = 'flex';
+    }
+
 }
 
 // Initialize the page - show personal info by default
@@ -30,8 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
      // Initialize message timers
      initializeMessageTimers();
 
+     setupLogout();
+
+
      // Attach logout event listener
-     document.getElementById("my5").addEventListener("click", logout);
+    //  document.getElementById("my5").addEventListener("click", logout);
 });
 
 function cancelEdit(){
@@ -50,6 +57,52 @@ function initializeMessageTimers() {
         }, 5000);
     });
 }
+
+if (confirmLogout) {
+    confirmLogout.addEventListener("click", function() {
+        // Change profile picture to blank
+        const profilePic = document.getElementById("pro"); // Using the ID from your HTML
+        if (profilePic) {
+            profilePic.src = "images/blankprofile.jpg";
+        }
+        
+        // Hide username and email
+        const userName = document.getElementById("ad"); // Using the ID from your HTML
+        const userEmail = document.getElementById("ae"); // Using the ID from your HTML
+        
+        if (userName) {
+            userName.classList.add("hidden");
+        }
+        
+        if (userEmail) {
+            userEmail.classList.add("hidden");
+        }
+        
+        // Hide the logout overlay
+        document.getElementById('logoutOverlay').style.display = 'none';
+        
+        // Show a logout success message
+        alert("You have been logged out successfully!");
+        
+        // Optional: Redirect to login page after a short delay
+        setTimeout(function() {
+             window.location.href = "singup.php"; // Change to your home/login page
+            // showSection('singup.php');
+
+        });
+    });
+}
+    
+    // Handle cancel logout
+    if (cancelLogout) {
+        cancelLogout.addEventListener("click", function() {
+            // Close the popup without logging out
+            document.getElementById('logoutOverlay').style.display = 'none';
+            // Return to previous active section
+            showSection('personal-info');
+        });
+    }
+
 
 
 document.addEventListener("DOMContentLoaded", function() {
