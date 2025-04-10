@@ -122,6 +122,41 @@ if (isset($_POST['save_address'])) {
     $stmt_update_address->close();
 }
 
+if (isset($_POST['delete'])) {
+    // Start transaction for data consistency
+    $conn->begin_transaction();
+    
+    try {
+        // First delete related records from successful_orders
+        $sql_delete_orders = "DELETE FROM successful_orders WHERE user_id=?";
+        $stmt_delete_orders = $conn->prepare($sql_delete_orders);
+        $stmt_delete_orders->bind_param("i", $u_id);
+        $stmt_delete_orders->execute();
+        $stmt_delete_orders->close();
+        
+        // Then delete the user
+        $sql_delete = "DELETE FROM user WHERE id=?";
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bind_param("i", $u_id);
+        $stmt_delete->execute();
+        $stmt_delete->close();
+        
+        // Commit the transaction
+        $conn->commit();
+        
+        // Clear session
+        session_destroy();
+        
+        // Redirect to signup page
+        header("Location: singup.php");
+        exit;
+    } catch (Exception $e) {
+        // Rollback in case of error
+        $conn->rollback();
+        echo "Error deleting account: " . $e->getMessage();
+    }
+}
+
 $conn->close();
 
 ?>
@@ -292,6 +327,14 @@ $conn->close();
                         <label class="form-check-label" for="smsNotif">SMS Notifications</label>
                     </div>
                     
+                    <hr class="my-4">
+    
+                     <div class="danger-zone">
+                       <h4 class="text-danger">Danger Zone</h4><br>
+                            <form method="POST" action="" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                                <button type="submit" name="delete" class="btn btn-danger">Delete Account</button>
+                            </form>
+                     </div>
                     
                 </div>
             </div>
