@@ -88,16 +88,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             
             
+
             try {
                 // Server settings
-                // $mail->SMTPDebug = SMTP::DEBUG_SERVER;             // Enable verbose debug output (set to 0 for production)
-                $mail->isSMTP();                                      // Send using SMTP
-                $mail->Host       = 'smtp.gmail.com';            // SMTP server
-                $mail->SMTPAuth   = true;                             // Enable SMTP authentication
-                $mail->Username   = 'teamdexterstyles@gmail.com';        // SMTP username
-                $mail->Password   = 'fhat pycl xfps opoy';            // SMTP password
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption
-                $mail->Port       = 587;                              // TCP port to connect to (use 465 for SSL)
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'teamdexterstyles@gmail.com';
+                $mail->Password   = 'xzhh bhxf gixl qmsb'; // Use app password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = 587;
+                $mail->SMTPOptions = array(
+                    'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    )
+                );                             // TCP port to connect to (use 465 for SSL)
                 
                 // Recipients
                 $mail->setFrom('teamdexterstyles@gmail.com', 'DexterStyles');
@@ -113,8 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->send();
                 echo json_encode(['status' => 'success', 'message' => 'Password reset instructions have been sent to your email.']);
             } catch (Exception $e) {
-                error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
-                echo json_encode(['status' => 'error', 'message' => 'Failed to send email. Please try again later.']);
+                echo json_encode(['status' => 'error', 'message' => 'Failed to send email: ' . $mail->ErrorInfo]);
             }
             
         } else {

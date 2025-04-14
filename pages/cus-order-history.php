@@ -4,7 +4,7 @@ session_start();
 include './../php_files/conn.php';
 
 // Check if the user is logged in, otherwise redirect to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+if(!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true){
     header("location: signin.php");
     exit;
 }
@@ -58,7 +58,7 @@ $result = $stmt->get_result();
                         <span class="order-id">Order #<?php echo $row["order_id"]; ?></span>
                     </div>
                     <div class="order-details">
-                        <img src="images/<?php echo $row["p_mimage"]; ?>" alt="<?php echo $row["p_title"]; ?>" class="product-image">
+                        <img src="./../img/<?php echo $row["p_mimage"]; ?>" alt="<?php echo $row["p_title"]; ?>" class="product-image">
                         
                         <div class="product-info">
                             <h3><?php echo $row["p_title"]; ?></h3>
@@ -82,7 +82,7 @@ $result = $stmt->get_result();
                     <i class="fas fa-shopping-bag" style="font-size: 48px; color: #ccc; margin-bottom: 15px;"></i>
                     <h3>You haven't placed any orders yet</h3>
                     <p>Browse our collection and place your first order today!</p>
-                    <a href="products.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">Shop Now</a>
+                    <a href="./products.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">Shop Now</a>
                 </div>
             <?php
             }

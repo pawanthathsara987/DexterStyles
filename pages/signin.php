@@ -17,7 +17,7 @@
             
             if (!empty($email) && !empty($password)) {
                 // Prepare statement to prevent SQL injection
-                $stmt = $conn->prepare("SELECT id, name, email, password FROM user WHERE email = ?");
+                $stmt = $conn->prepare("SELECT id, name, email, password, profile_pic FROM user WHERE email = ?");
                 $stmt->bind_param("s", $email);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -30,7 +30,8 @@
                         $_SESSION['user_id'] = $user['id'];
                         $_SESSION['name'] = $user['name'];
                         $_SESSION['email'] = $user['email'];
-                        $_SESSION["loggedin"] = true;
+                        $_SESSION['logged_in'] = true;
+                        $_SESSION['profile_pic'] = $user['profile_pic']; 
                         
                         // Redirect to home page or dashboard
                         header("Location: ./../home.php");

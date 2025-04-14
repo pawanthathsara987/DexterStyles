@@ -34,7 +34,7 @@ if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
 // Database connection check
 echo "<h2>Database Connection Check</h2>";
 try {
-    include './../connection/conn.php';
+    include './../php_files/conn.php';
     echo "<p style='color:green'>✓ Database connection file included</p>";
     
     if (isset($conn) && $conn instanceof mysqli) {
