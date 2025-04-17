@@ -193,7 +193,7 @@
     <title><?php echo $_SESSION['p_title']; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./../css/product_details.css">
+    <link rel="stylesheet" href="./../css/product-details.css">
     <link rel="stylesheet" href="./../css/home.css">
 </head>
 <body>
@@ -202,7 +202,9 @@
         <nav class="nav">
             <div class="logo"><a href="./../home.php"><img src="./../img/Logo.png" alt="DexterStyles Logo"></a></div>
             <div class="nav-actions">
-                <a href="./view_cart.php" class="cart-icon">🛒</a>
+                <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                    <a href="./view_cart.php" class="cart-icon">🛒</a>
+                <?php endif; ?>
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
                 <a href="./profile.php" class="p-pic">
                     <img src="./../img/profile_photo/<?php echo empty($_SESSION['profile_pic']) ? 'blankprofile.jpg' : $_SESSION['profile_pic']; ?>" alt="Profile">

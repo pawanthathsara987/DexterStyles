@@ -201,14 +201,6 @@
                     <?php if(isset($error_msg) && !empty($error_msg) && !isset($_POST['signupbtn'])) { ?>
                         <div class="signin-error-message" style="display: block;"><?php echo $error_msg; ?></div>
                     <?php } ?>
-                    
-                    <div class="separator">
-                        <span>OR</span>
-                    </div>
-                    <button type="button" class="google-login-btn">
-                        <img src="./../img/google.png" alt="Google Icon" class="google-icon">
-                        Sign in with Google
-                    </button>
                 </form>
             </div>
             
@@ -241,13 +233,6 @@
                     </div>
                     <div id="error-message" class="error-message">Passwords do not match!</div>
                     <button type="submit" name="signupbtn">Sign Up</button>
-                    <div class="separator">
-                        <span>OR</span>
-                    </div>
-                    <button type="button" class="google-login-btn">
-                        <img src="./../img/google.png" alt="Google Icon" class="google-icon">
-                        Sign up with Google
-                    </button>
                 </form>
             </div>
 

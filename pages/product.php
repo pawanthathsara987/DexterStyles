@@ -190,7 +190,9 @@ if ($stmt) {
                 <li><a href="./contact.php">Contact</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="./view_cart.php" class="cart-icon">🛒</a>
+                <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                    <a href="./view_cart.php" class="cart-icon">🛒</a>
+                <?php endif; ?>
 
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
                 <a href="./profile.php" class="p-pic">
