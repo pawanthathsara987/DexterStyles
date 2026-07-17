@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f1f1;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 30px auto;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+  }
+
+  .form-section, .summary-section {
+    padding: 20px;
+  }
+
+  .form-section {
+    flex: 2;
+  }
+
+  .summary-section {
+    flex: 1;
+    border-left: 1px solid #ccc;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  form input, form select {
+    padding: 10px;
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .label-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .label-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .btn-save, .btn-pay {
+    width: 100%;
+    padding: 12px;
+    font-weight: bold;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  .btn-pay {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+
+  .summary-section p {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+  }
+
+  .total {
+    font-size: 18px;
+    color: #e36d00;
+    font-weight: bold;
+  }
